@@ -136,9 +136,20 @@ See `environment/pip_list.txt`
 
 ---
 
-## 7. Training Pipeline 
+## 7. Reproducibility Note
+
+This repository focuses on the model architecture, training pipeline, and experiment setup.
+
+The original WSI dataset used in this study was obtained through a clinical collaboration with Seoul National University Hospital and cannot be publicly released due to data privacy restrictions.
+
+Therefore, the exact reproduction of the reported results is not possible without access to the original dataset. However, the codebase can be adapted to other WSI datasets for similar experiments.
+
+---
+
+## 8. Training Pipeline 
 
 1. Generate teacher predictions
+Teacher predictions are assumed to be precomputed from a separate teacher model.
 ```bash
 python code/teacher/make_teacher_from_csv.py
 ```
@@ -152,7 +163,7 @@ python code/inference/infer_student_band_camil_longmil.py
 ```
 ---
 
-## 8. Experiments 
+## 9. Experiments 
 We conduct ablation experiments to analyze the impact of different architectural components.
 
 Compared variants:
@@ -165,7 +176,7 @@ Each model is evaluated using **Macro-F1 score**.
 
 ---
 
-## 9. Results 
+## 10. Results 
 ### Ablation Results
 
 Macro-F1 scores for different student model variants.
@@ -182,7 +193,7 @@ Example visualization of student predictions on a representative WSI.
 
 ---
 
-## 10. Future Work
+## 11. Future Work
 
 Possible future improvements include:
 
@@ -193,7 +204,7 @@ Possible future improvements include:
 
 ---
 
-## 11. Discussion and Limitations
+## 12. Discussion and Limitations
 
 In this study, experiments were conducted primarily at the **patch-level classification setting**.
 
