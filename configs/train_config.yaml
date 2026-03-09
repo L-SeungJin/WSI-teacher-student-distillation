@@ -1,0 +1,75 @@
+project:
+  name: WSI-teacher-student-distillation
+  task: tissue_microenvironment_classification
+  metric: macro_f1
+
+data:
+  wsi_root: /data2/RAW_DATA/GC_WSI_SNU/AGC_HE-30
+  feature_root: /workspace/GC_WSI_Results_MoE_UNI
+  num_classes: 8
+
+classes:
+  - ADI
+  - DEB
+  - LYM
+  - MUC
+  - MUS
+  - NOR
+  - STR
+  - TUM
+
+model:
+  input_dim: 1024
+  hidden_dim: 512
+  radius: 2
+  sim_beta: 1.0
+  use_positional_encoding: true
+
+training:
+  optimizer: adam
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  batch_size: 1
+  epochs: 30
+  seed: 42
+
+teacher:
+  script: code/teacher/make_teacher_from_csv.py
+  output_dir: /workspace/my_exp/teacher_predictions
+
+variants:
+
+  full:
+    description: Band attention + similarity bias + global context
+    train_script: code/student/train_student_band_camil_longmil.py
+    checkpoint_dir: /workspace/my_exp/student_ckpt_band_camil_longmil
+    use_global: true
+    use_similarity: true
+
+  no_global:
+    description: Band attention + similarity bias (no global context)
+    train_script: code/student/train_student_band_noglobal.py
+    checkpoint_dir: /workspace/my_exp/student_ckpt_band_noglobal
+    use_global: false
+    use_similarity: true
+
+  no_similarity:
+    description: Band attention + global context (no similarity bias)
+    train_script: code/student/train_student_band_nosim.py
+    checkpoint_dir: /workspace/my_exp/student_ckpt_band_nosim
+    use_global: true
+    use_similarity: false
+
+inference:
+
+  full:
+    script: code/inference/infer_student_band_camil_longmil_overlay.py
+    checkpoint: /workspace/my_exp/student_ckpt_band_camil_longmil/best_student.pt
+
+  no_global:
+    script: code/inference/infer_student_band_noglobal_overlay.py
+    checkpoint: /workspace/my_exp/student_ckpt_band_noglobal/best_student.pt
+
+  no_similarity:
+    script: code/inference/infer_student_band_nosim_overlay.py
+    checkpoint: /workspace/my_exp/student_ckpt_band_nosim/best_student.pt

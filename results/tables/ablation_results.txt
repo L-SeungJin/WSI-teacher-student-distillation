@@ -1,0 +1,10 @@
+
+===== Ablation Results =====
+
+Model                                 Macro-F1
+--------------------------------------------------
+Full (Band + CAMIL + Global)            0.8593
+No Global                               0.8599
+No Similarity                           0.8601
+
+
