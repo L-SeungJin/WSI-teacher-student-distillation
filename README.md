@@ -117,7 +117,7 @@ pip install -r requirements.txt
 Main dependencies:
 
 Python 3.11  
-PyTorch 2.10  
+PyTorch 2.1.0  
 CUDA 12.8  
 
 Key libraries:
