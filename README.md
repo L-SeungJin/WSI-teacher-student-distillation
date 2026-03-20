@@ -187,9 +187,6 @@ Macro-F1 scores for different student model variants.
 | No Global | 0.8599 |
 | No Similarity | 0.8601 |
 
-### Qualitative Comparison
-Example visualization of student predictions on a representative WSI.
-![Ablation Panel](results/figures/AGT-001-6_ablation_panel.png)
 
 ---
 
